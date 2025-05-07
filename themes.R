@@ -1,6 +1,6 @@
 #############################################
 # Custom ggplot2 Themes with Google Fonts
-# Author: Your Name
+# Author: Lasse Rodeck
 # Date: 2025-05-07
 # Purpose: Define styled themes with showtext
 #############################################
