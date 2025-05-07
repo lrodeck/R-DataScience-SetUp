@@ -53,3 +53,38 @@ Each theme supports DPI-optimized rendering for publication and PDF/PNG export.
 source("setup_environment.R")  # One-time setup
 source("themes.R")             # Load themes
 ```
+4. Use in plots:
+
+```r
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point(size = 3) +
+  labs(title = "Neo-Brutalist Plot") +
+  theme_neo_brutalist()
+```
+## 🎨 Requirements  
+- R ≥ 4.2.0
+- Internet connection (for Google Fonts via showtext)
+- Recommended: RStudio with quarto for reporting
+
+## 📁 Folder Structure Created
+```
+/data
+  └── raw/
+  └── processed/
+/notebooks
+/scripts
+/models
+/output
+```
+## 🧩 To Do
+- [ ] Add color palettes for each theme
+
+- [ ] Create Quarto report template
+
+- [ ] Add GitLab CI/CD automation for reports
+
+## 🙌 Contributing
+Feel free to fork and add your own themes or improvements. If you make cool new themes, submit a pull request!
+
+## 📜 License
+MIT License – use freely in personal or commercial projects.
