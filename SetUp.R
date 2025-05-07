@@ -1,6 +1,6 @@
 #############################################
 # R Environment Setup for Data & ML Projects
-# Author: Your Name
+# Author: Lasse Rodeck
 # Date: 2025-05-07
 # Purpose: Bootstrap R for data analytics, ML, DL
 #############################################
