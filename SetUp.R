@@ -1,36 +1,92 @@
-# =============================
-# Package Documentation
-# =============================
+#############################################
+# R Environment Setup for Data & ML Projects
+# Author: Your Name
+# Date: 2025-05-07
+# Purpose: Bootstrap R for data analytics, ML, DL
+#############################################
 
-# ---- Data Science & Analytics ----
-# tidyverse      - Collection of R packages for data manipulation, visualization, and analysis.
-# data.table     - Fast and efficient handling of large datasets.
-# ggplot2        - Advanced data visualization package based on grammar of graphics.
-# readr          - Functions for reading data files into R quickly.
-# lubridate      - Simplifies working with date-time data in R.
-# janitor        - Helps clean and format data for analysis.
+# ---- 1. INSTALL PACKAGES ----
 
-# ---- Google Integration ----
-# googledrive    - Enables interaction with Google Drive for file storage.
-# googlesheets4  - Provides tools for reading and writing Google Sheets.
+required_packages <- c(
+  # Core Data Manipulation
+  "tidyverse", "data.table", "lubridate", "janitor",
+  
+  # Visualization
+  "ggplot2", "plotly", "ggthemes", "ggridges", "patchwork",
+  
+  # Statistics & Modeling
+  "broom", "car", "effects", "MASS", "lmtest",
+  
+  # ML & DL
+  "caret", "randomForest", "xgboost", "lightgbm",
+  "keras", "tensorflow", "torch", "tidymodels",
+  
+  # Data I/O
+  "readxl", "writexl", "arrow", "jsonlite", "DBI", "RSQLite",
+  
+  # Time Series
+  "forecast", "prophet", "tsibble", "fable", "timetk",
+  
+  # Reporting
+  "rmarkdown", "knitr", "quarto", "gt", "DT"
+)
 
-# ---- Fonts & Visualization ----
-# showtext       - Allows custom fonts in ggplot2, including Google Fonts.
+install_if_missing <- function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg)
+  }
+}
 
-# ---- Machine Learning & AI ----
-# caret          - Comprehensive framework for ML modeling and preprocessing.
-# randomForest   - Implements random forest algorithms for classification and regression.
-# xgboost        - Optimized gradient boosting machine learning method.
-# e1071          - Functions for support vector machines (SVM) and Naïve Bayes classification.
-# keras          - High-level deep learning framework that runs on top of TensorFlow.
-# tensorflow     - Open-source AI and deep learning framework for neural networks.
+invisible(lapply(required_packages, install_if_missing))
 
 
-# =============================
-# Install Required Packages
-# =============================
+# ---- 2. LOAD LIBRARIES ----
 
-install.packages(c("tidyverse", "data.table", "ggplot2", "readr", "lubridate", "janitor", 
-                   "googledrive", "googlesheets4", "showtext", "caret", "randomForest", 
-                   "xgboost", "e1071", "keras", "tensorflow"))
+lapply(required_packages, library, character.only = TRUE)
 
+
+# ---- 3. SYSTEM OPTIONS ----
+
+options(stringsAsFactors = FALSE)
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Make plots inline in notebooks
+if (requireNamespace("knitr", quietly = TRUE)) {
+  knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+}
+
+
+# ---- 4. TENSORFLOW / KERAS SETUP ----
+
+if (!keras::is_keras_available()) {
+  keras::install_keras()
+}
+
+if (!tensorflow::tf_version()) {
+  tensorflow::install_tensorflow()
+}
+
+# Check GPU availability
+if (tensorflow::tf_gpu_configured()) {
+  cat("✅ TensorFlow is configured with GPU support.\n")
+} else {
+  cat("⚠️ TensorFlow is using CPU. Consider configuring GPU if available.\n")
+}
+
+
+# ---- 5. CREATE PROJECT STRUCTURE ----
+
+dirs <- c("data/raw", "data/processed", "notebooks", "scripts", "models", "output")
+
+for (dir in dirs) {
+  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+}
+
+
+# ---- 6. HELPER FUNCTION EXAMPLE ----
+
+scale_numeric <- function(df) {
+  df %>% mutate(across(where(is.numeric), scale))
+}
+
+cat("✅ Environment setup complete. Happy analyzing!\n")
